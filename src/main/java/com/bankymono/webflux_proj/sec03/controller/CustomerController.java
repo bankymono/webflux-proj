@@ -3,6 +3,7 @@ package com.bankymono.webflux_proj.sec03.controller;
 import com.bankymono.webflux_proj.sec03.dto.CustomerDto;
 import com.bankymono.webflux_proj.sec03.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -20,8 +21,10 @@ public class CustomerController {
     }
 
     @GetMapping("{id}")
-    public Mono<CustomerDto> getCustomer(@PathVariable Integer id) {
-        return this.customerService.getCustomerById(id);
+    public Mono<ResponseEntity<CustomerDto>> getCustomer(@PathVariable Integer id) {
+        return this.customerService.getCustomerById(id)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -30,8 +33,10 @@ public class CustomerController {
     }
 
     @PutMapping("{id}")
-    public Mono<CustomerDto> updateCustomer(@PathVariable Integer id, @RequestBody Mono<CustomerDto> mono) {
-        return this.customerService.updateCustomer(id,mono);
+    public Mono<ResponseEntity<CustomerDto>> updateCustomer(@PathVariable Integer id, @RequestBody Mono<CustomerDto> mono) {
+        return this.customerService.updateCustomer(id,mono)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("{id}")
