@@ -5,6 +5,7 @@ import com.bankymono.webflux_proj.sec03.dto.CustomerDto;
 import com.bankymono.webflux_proj.sec03.mapper.EntityDtoMapper;
 import com.bankymono.webflux_proj.sec03.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -17,6 +18,11 @@ public class CustomerService {
 
     public Flux<CustomerDto> getAllCustomers() {
         return this.customerRepository.findAll()
+                .map(EntityDtoMapper::toDto);
+    }
+
+    public Flux<CustomerDto> getAllCustomers(Integer page, Integer size) {
+        return this.customerRepository.findBy(PageRequest.of(page - 1,size))
                 .map(EntityDtoMapper::toDto);
     }
 
@@ -40,8 +46,8 @@ public class CustomerService {
                 .map(EntityDtoMapper::toDto);
     }
 
-    public Mono<Void> deleteCustomerById(Integer id) {
-        return this.customerRepository.deleteById(id);
+    public Mono<Boolean> deleteCustomerById(Integer id) {
+        return this.customerRepository.deleteByCustomerId(id);
     }
 
 }

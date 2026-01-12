@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Id;
 public class Customer {
 
     @Id
-    private int id;
+    private Integer id;
     private String name;
     private String email;
 }
