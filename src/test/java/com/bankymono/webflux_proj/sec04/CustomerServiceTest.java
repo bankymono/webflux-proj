@@ -1,6 +1,6 @@
-package com.bankymono.webflux_proj.sec03;
+package com.bankymono.webflux_proj.sec04;
 
-import com.bankymono.webflux_proj.sec03.dto.CustomerDto;
+import com.bankymono.webflux_proj.sec04.dto.CustomerDto;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.util.Objects;
 
 @AutoConfigureWebTestClient
-@SpringBootTest(properties = "sec=sec03")
+@SpringBootTest(properties = "sec=sec04")
 public class CustomerServiceTest {
     private static final Logger log = LoggerFactory.getLogger(CustomerServiceTest.class);
 
@@ -102,13 +102,15 @@ public class CustomerServiceTest {
                 .uri("/customers/11")
                 .exchange()
                 .expectStatus().is4xxClientError()
-                .expectBody().isEmpty();
+                .expectBody()
+                .jsonPath("$.detail").isEqualTo("Customer [id=11] is not found");
 
         this.client.delete()
                 .uri("/customers/11")
                 .exchange()
                 .expectStatus().is4xxClientError()
-                .expectBody().isEmpty();
+                .expectBody()
+                .jsonPath("$.detail").isEqualTo("Customer [id=11] is not found");
 
         var dto = new CustomerDto(null, "noel", "noel@gmail.com");
         this.client.put()
@@ -116,7 +118,38 @@ public class CustomerServiceTest {
                 .bodyValue(dto)
                 .exchange()
                 .expectStatus().is4xxClientError()
-                .expectBody().isEmpty();
+                .expectBody()
+                .jsonPath("$.detail").isEqualTo("Customer [id=11] is not found");
+    }
+
+    @Test
+    public void invalidInput() {
+        var missingName = new CustomerDto(null, null, "noel@gmail.com");
+        this.client.post()
+                .uri("/customers")
+                .bodyValue(missingName)
+                .exchange()
+                .expectStatus().is4xxClientError()
+                .expectBody()
+                .jsonPath("$.detail").isEqualTo("Name is required");
+
+        var missingEmail = new CustomerDto(null, "noel", null);
+        this.client.post()
+                .uri("/customers")
+                .bodyValue(missingEmail)
+                .exchange()
+                .expectStatus().is4xxClientError()
+                .expectBody()
+                .jsonPath("$.detail").isEqualTo("Valid email is required");
+
+        var invalidEmail = new CustomerDto(null, "noel", "noel");
+        this.client.put()
+                .uri("/customers/10")
+                .bodyValue(invalidEmail)
+                .exchange()
+                .expectStatus().is4xxClientError()
+                .expectBody()
+                .jsonPath("$.detail").isEqualTo("Valid email is required");
     }
 
 }
