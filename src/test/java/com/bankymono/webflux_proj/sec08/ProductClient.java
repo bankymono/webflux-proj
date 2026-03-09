@@ -21,4 +21,11 @@ public class ProductClient {
                 .bodyToMono(UploadResponse.class);
     }
 
+    public Flux<ProductDto> downloadProducts(){
+        return this.client.get().uri("/products/download")
+                .accept(MediaType.APPLICATION_NDJSON)
+                .retrieve()
+                .bodyToFlux(ProductDto.class);
+    }
+
 }
