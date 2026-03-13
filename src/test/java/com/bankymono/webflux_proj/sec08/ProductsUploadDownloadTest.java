@@ -1,6 +1,6 @@
 package com.bankymono.webflux_proj.sec08;
 
-import com.bankymono.webflux_proj.sec08.dto.ProductDto;
+import com.bankymono.webflux_proj.sec09.dto.ProductDto;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

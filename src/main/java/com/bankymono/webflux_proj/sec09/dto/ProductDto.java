@@ -1,4 +1,4 @@
-package com.bankymono.webflux_proj.sec08.dto;
+package com.bankymono.webflux_proj.sec09.dto;
 
 public record ProductDto(Integer id,
                          String description,

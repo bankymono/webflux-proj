@@ -1,4 +1,4 @@
-package com.bankymono.webflux_proj.sec08.entity;
+package com.bankymono.webflux_proj.sec09.entity;
 
 import lombok.Getter;
 import lombok.Setter;

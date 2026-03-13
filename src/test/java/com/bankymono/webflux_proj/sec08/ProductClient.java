@@ -1,7 +1,7 @@
 package com.bankymono.webflux_proj.sec08;
 
-import com.bankymono.webflux_proj.sec08.dto.ProductDto;
-import com.bankymono.webflux_proj.sec08.dto.UploadResponse;
+import com.bankymono.webflux_proj.sec09.dto.ProductDto;
+import com.bankymono.webflux_proj.sec09.dto.UploadResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;

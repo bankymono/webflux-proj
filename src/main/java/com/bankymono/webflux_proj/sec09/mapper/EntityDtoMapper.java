@@ -1,7 +1,7 @@
-package com.bankymono.webflux_proj.sec08.mapper;
+package com.bankymono.webflux_proj.sec09.mapper;
 
-import com.bankymono.webflux_proj.sec08.dto.ProductDto;
-import com.bankymono.webflux_proj.sec08.entity.Product;
+import com.bankymono.webflux_proj.sec09.dto.ProductDto;
+import com.bankymono.webflux_proj.sec09.entity.Product;
 
 public class EntityDtoMapper {
     public static Product toEntity(ProductDto dto) {

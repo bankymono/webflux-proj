@@ -1,6 +1,6 @@
-package com.bankymono.webflux_proj.sec08.repository;
+package com.bankymono.webflux_proj.sec09.repository;
 
-import com.bankymono.webflux_proj.sec08.entity.Product;
+import com.bankymono.webflux_proj.sec09.entity.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
